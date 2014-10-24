@@ -3,7 +3,7 @@ using System.Collections;
 
 public class rotating : MonoBehaviour {
         
-        public GameObject   Block = null;
+        public GameObject   Rotating_Block = null;
         public float        Rotation = 0.0f;
         //public Vector2  StartVelocity = new Vector2 (10, 0);
         //public float    xx ;
@@ -13,7 +13,7 @@ public class rotating : MonoBehaviour {
         // Use this for initialization
         void Start ()
         {
-                if (Block == null)
+                if (Rotating_Block == null)
                     print ("Block is null");
         }
         
@@ -29,15 +29,36 @@ public class rotating : MonoBehaviour {
             {
                 if(Input.GetKey (KeyCode.LeftArrow))
                 {
+                    print ("Left");
                     pressed = true;
                     Rotation -= 90;
+                    if(Rotation < 0)    
+                        Rotation += 360;
+                    Quaternion rot = Quaternion.AngleAxis(Rotation, Vector3.left);
+                    Rotating_Block.transform.rotation = rot;
+
                 }
 
                 if(Input.GetKey (KeyCode.LeftArrow))
                 {
+                    print ("Right");
                     pressed = true;
+                    Rotation += 90;
+
+                    if(Rotation > 360)
+                        Rotation -= 360;
+                    Quaternion rot = Quaternion.AngleAxis(Rotation, Vector3.left);
+                    Rotating_Block.transform.rotation = rot;
 
                 }
+
+                
+
+
             }
         }
 }
+
+
+
+
