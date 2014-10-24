@@ -22,7 +22,7 @@ public class rotating : MonoBehaviour {
         {
             if (pressed)
             {
-                if(!(Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.LeftArrow)))
+                if(!(Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.RightArrow)))
                     pressed = false;
             }
             else
@@ -34,12 +34,13 @@ public class rotating : MonoBehaviour {
                     Rotation -= 90;
                     if(Rotation < 0)    
                         Rotation += 360;
-                    Quaternion rot = Quaternion.AngleAxis(Rotation, Vector3.left);
+                    Quaternion rot = Quaternion.AngleAxis(Rotation, Vector3.back);
+                                print (rot);
                     Rotating_Block.transform.rotation = rot;
 
                 }
 
-                if(Input.GetKey (KeyCode.LeftArrow))
+                if(Input.GetKey (KeyCode.RightArrow))
                 {
                     print ("Right");
                     pressed = true;
@@ -47,7 +48,9 @@ public class rotating : MonoBehaviour {
 
                     if(Rotation > 360)
                         Rotation -= 360;
-                    Quaternion rot = Quaternion.AngleAxis(Rotation, Vector3.left);
+                    Quaternion rot = Quaternion.AngleAxis(Rotation, Vector3.back);
+                                print (rot);
+
                     Rotating_Block.transform.rotation = rot;
 
                 }
