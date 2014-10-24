@@ -22,12 +22,12 @@ public class move_and_jump : MonoBehaviour {
 	{
         if (pressed)
         {
-            if(!Input.GetKey (KeyCode.Space))
+            if(!(Input.GetKey (KeyCode.Space) || Input.GetMouseButton(0)))
                 pressed = false;
         }
         else
         {
-            if (Input.GetKey (KeyCode.Space))
+            if (Input.GetKey (KeyCode.Space) || Input.GetMouseButton(0))
             {
                 
                 if (JumpsLeft > 0)
