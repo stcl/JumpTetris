@@ -6,17 +6,17 @@ using System.Collections;
 
 public class GridMove : MonoBehaviour {
 
-	public GameObject testblock;
+	private GameObject trackedObject;
 	public bool[,] pino;
 	public bool[,] usedBlocks;
+	public SpawnScript spawnScript;
 
 	// public preFab
-	public GameObject newBlock;
 
-	void onColliderEnter2D( Collider2D coll ) 
+	void onTriggerEnter2D( Collider2D coll ) 
 	{
 		Debug.Log( "Gridin sisalla");
-
+		trackedObject = coll.gameObject;
 		// Start the tracking
 	}
 		
@@ -27,8 +27,8 @@ public class GridMove : MonoBehaviour {
 	{
 
 		// Get the copy of the blocks position and rotation
-		// New block is being generated
 
+		spawnScript.allowSpawn = true;
 		if( this.isRowFull() )
 			Debug.Log("Saatiin rivi tayteen");
 		else
