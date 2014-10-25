@@ -13,7 +13,8 @@ public class GridMove : MonoBehaviour {
 	public bool gridNotEmpty;
 
 	public Vector3 bottomPosition;
-	public Vector3 currentPos;
+	public Vector3 bottom = new Vector3(0f,-1f,0f); // Magic number
+    public Vector3 currentPos;
 	public GameObject currentBlock;
 	
 	public GameObject bottomWall;
@@ -47,14 +48,27 @@ public class GridMove : MonoBehaviour {
 
 
 
-	/* Turn the block static and spawn new one*/
+	/* Move block from parent to grid - spawn new one */
 
 	void stopTheBlock()	
 	{
-
 		// Get the copy of the blocks position and rotation
+        // find the right block from scene/pool/parent and move
+		currentPos = currentBlock.transform.position;
+		int gridPosX = Mathf.RoundToInt ( currentPos.x );
 
-		spawnScript.allowSpawn = true;
+		Debug.Log ( gridPosX );
+
+		pino[ gridPosX, 0 ] = true;
+
+		currentBlock = null;
+		//currentBlock = GameObject.FindGameObjectsWithTag<>();
+
+
+
+
+
+		//spawnScript.allowSpawn = true;
 
 		if( this.isRowFull() )
 			Debug.Log("Saatiin rivi tayteen");
@@ -63,27 +77,17 @@ public class GridMove : MonoBehaviour {
 
 	}
 
-	void canStackBlocks() 
-	{
-		// Blocks can be on top of others
 
-	}
 
-	void checkNextBlock() 
-	{
-		// Blocks react to others
-		
-	}
-
+	/* Bottom and left + with each other*/
 	void checkCollisions()
 	{
 		// check if on the bottom
 		this.currentPos = currentBlock.transform.position;
-		Vector3 bottom = this.bottomWall;
 
-		if( currentPos == bottom )
+
+		if( currentPos.y <= bottom.y )
 			this.stopTheBlock();
-
 
 	}
 	
@@ -110,6 +114,28 @@ public class GridMove : MonoBehaviour {
 
 	}
 
+	bool moveBlockToGrid() 
+	{
+
+		return true;
+	}
+	
+	void canStackBlocks() 
+	{
+		// Blocks can be on top of others
+		
+	}
+	
+	void checkNextBlock() 
+	{
+        // Blocks react to others
+        
+	}
+
+
+	
+	void spawnToLowerRight() {}    
+    
 
 	// Use this for initialization
 	void Start() 
@@ -123,7 +149,7 @@ public class GridMove : MonoBehaviour {
 	void Update () 
 	{
 		//currentPos = transform.position();
-		if( gridNotEmpty )
+		if( gridNotEmpty && currentBlock != null)
 			checkCollisions();
 
 
