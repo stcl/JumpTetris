@@ -17,7 +17,18 @@ public class GridMove : MonoBehaviour {
 		trackedObject = coll.gameObject;
 		// Start the tracking
 	}
-		
+
+
+	// If bounces out (left) Back or dead?
+	void onTriggerExit2D( Collider2D coll ) 
+	{
+		Debug.Log( "Bumbed out of grid");
+		trackedObject = coll.gameObject;
+		// Stop the tracking
+	}
+
+
+
 
 	/* Unit Tests */
 
@@ -27,7 +38,7 @@ public class GridMove : MonoBehaviour {
 		// Get the copy of the blocks position and rotation
 
 		spawnScript.allowSpawn = true;
-	
+
 		if( this.isRowFull() )
 			Debug.Log("Saatiin rivi tayteen");
 		else
@@ -89,7 +100,7 @@ public class GridMove : MonoBehaviour {
 	void Update () 
 	{
 		checkCollisions();
-		blockIsStopped();
+		//blockIsStopped();
 		
 	}
 }
