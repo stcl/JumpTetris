@@ -21,7 +21,7 @@ public class IngameUIScript : MonoBehaviour {
 		score = 0;
 		screenHeight = Screen.height;
 		screenWidth = Screen.width;
-		mediumFontStyle.fontSize = Screen.width / 20;
+		mediumFontStyle.fontSize = Screen.width / 23;
 		bigFontStyle.fontSize = Screen.width / 15;
 		scoreDimensions = mediumFontStyle.CalcSize (new GUIContent(score.ToString ()));
 		hiscoreDimensions = mediumFontStyle.CalcSize (new GUIContent("Highscore: "+ PlayerPrefs.GetInt("HighScore").ToString()));
@@ -38,9 +38,9 @@ public class IngameUIScript : MonoBehaviour {
 
 	void OnGUI() {
 		scoreDimensions = mediumFontStyle.CalcSize (new GUIContent(score.ToString ()));
-		GUI.Label (new Rect (Screen.width / 2f - scoreDimensions.x /2f, scoreDimensions.y * 0.3f, scoreDimensions.x, scoreDimensions.y), score.ToString(), mediumFontStyle);
+		GUI.Label (new Rect (Screen.width / 2f - scoreDimensions.x /2f, scoreDimensions.y * 0.2f, scoreDimensions.x, scoreDimensions.y), score.ToString(), mediumFontStyle);
 		hiscoreDimensions = mediumFontStyle.CalcSize (new GUIContent("Highscore: "+ PlayerPrefs.GetInt("HighScore").ToString()));
-		GUI.Label (new Rect (Screen.width - hiscoreDimensions.x *1.1f, hiscoreDimensions.y * 0.3f, hiscoreDimensions.x, hiscoreDimensions.y), "Highscore: "+ PlayerPrefs.GetInt("HighScore").ToString(), mediumFontStyle);
+		GUI.Label (new Rect (Screen.width - hiscoreDimensions.x *1.1f, hiscoreDimensions.y * 0.2f, hiscoreDimensions.x, hiscoreDimensions.y), "Highscore: "+ PlayerPrefs.GetInt("HighScore").ToString(), mediumFontStyle);
 		if (gameOver) {
 			if (newRecord == false) {
 			GUI.Label (new Rect (Screen.width / 2f - gameOverDimensions.x /2f, scoreDimensions.y * 1.5f, gameOverDimensions.x, gameOverDimensions.y), "Game Over!", bigFontStyle);
