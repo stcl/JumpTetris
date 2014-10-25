@@ -15,7 +15,7 @@ public class placeHolderScript : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		spawnScript.allowSpawn = true;
+
 	}
 
 }

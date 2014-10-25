@@ -5,10 +5,13 @@ public class Collides : MonoBehaviour {
 	private int[] topBlockColumn = new int[] {0, 0, 0, 0, 0, 0};
 	private int[] collidersBottomColumn = new int[] {11, 11, 11, 11, 11, 11};
 	private int dropAmount = 11;
+	public IngameUIScript inGameUIScript;
+	public SpawnScript spawnScript;
 	float yVelocity;
 	
-	void Update() {
-
+	void Start() {
+		inGameUIScript = GameObject.Find("Scripts").GetComponent<IngameUIScript>();
+		spawnScript = GameObject.Find("Scripts").GetComponent<SpawnScript>();
 	}
 	
 	void OnCollisionEnter2D () {
@@ -26,11 +29,12 @@ public class Collides : MonoBehaviour {
 				child.GetComponent<Block>().activated = true;
 			}
 		}
+		spawnScript.spawnBlock();
+		inGameUIScript.updateNextBlock();
 		transform.DetachChildren();
         Destroy(gameObject);
 		for(int i = 0; i < 6; i++) {
-			Debug.Log(collidersBottomColumn[i] - topBlockColumn[i] + " " + collidersBottomColumn[i] + " " + topBlockColumn[i]);
-			if(collidersBottomColumn[i] - topBlockColumn[i] < dropAmount) {
+				if(collidersBottomColumn[i] - topBlockColumn[i] < dropAmount) {
 				dropAmount = collidersBottomColumn[i] - topBlockColumn[i];
 			}
 		}

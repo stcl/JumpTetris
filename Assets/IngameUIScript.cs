@@ -25,6 +25,7 @@ public class IngameUIScript : MonoBehaviour {
 	public Texture block6sprite;
 
 	private int nextBlock;
+
 	// Use this for initialization
 	void Start () {
 		score = 0;
@@ -43,7 +44,7 @@ public class IngameUIScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		nextBlock = spawnScript.nextBlock;
+		//nextBlock = spawnScript.nextBlock;
 	}
 
 	void OnGUI() {
@@ -98,6 +99,10 @@ public class IngameUIScript : MonoBehaviour {
 			PlayerPrefs.SetInt("HighScore", amount);
 			newRecord = true;
 		}
+	}
+
+	public void updateNextBlock() {
+		nextBlock = spawnScript.nextBlock;
 	}
 
 }

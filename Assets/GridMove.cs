@@ -7,32 +7,34 @@ using System.Collections.Generic;
 
 public class GridMove : MonoBehaviour {
 
+	public int boardsizeY = 12, boardsizeX = 6;
+
 	private GameObject trackedObject;
 	public bool[,] pino;
 	public bool[,] usedBlocks;
 	public SpawnScript spawnScript;
 	public bool gridNotEmpty;
 
-	public Vector3 bottomPosition;
-	public Vector3 bottom = new Vector3(0f,0f,0f); // Magic number!
+	//public Vector3 bottomPosition;
+	//public Vector3 bottom = new Vector3(0f,0f,0f); // Magic number!
     public Vector3 currentPos;
 	public GameObject currentBlock;
 	
 	//public List<List<Vector2>> allBlocks = new List<List<Vector2>>();
 	public ArrayList allBlocks = new ArrayList();
-	public ArrayList nonMovingBlocks = new ArrayList();
+	public ArrayList passiveBlocks = new ArrayList();
 	
-	public GameObject bottomWall;
-	public GameObject rightWall;
+	//public GameObject bottomWall;
+	//public GameObject rightWall;
 	
 	
 	/* The current blocks are gathered to arraylist */
-	void OnCollisionEnter2D(Collision2D coll) 
+	void OnTriggerEnter2D(Collider2D colli) 
 	{
 	
 		Debug.Log( "Gridin sisalla");
 
-		Collider2D colli = coll.collider;
+		//Collider2D colli = coll.collider;
 		trackedObject = colli.gameObject.transform.parent.gameObject;
 		currentBlock = trackedObject;
 		//allBlocks.Add( currentBlock );
@@ -76,11 +78,11 @@ public class GridMove : MonoBehaviour {
 		
 		}
 
+		//GameObject spawnedBlock = Instantiate (block) as GameObject; 
+
 		allBlocks.Add( block );
 
 	}
-
-
 
 
 
@@ -116,7 +118,7 @@ public class GridMove : MonoBehaviour {
 		currentBlock = null;
 		//currentBlock = GameObject.FindGameObjectsWithTag<>();
 			
-		spawnScript.allowSpawn = true;
+		//spawnScript.allowSpawn = true;
 
 		if( this.isRowFull() )
 			Debug.Log("Saatiin rivi tayteen");
@@ -127,7 +129,7 @@ public class GridMove : MonoBehaviour {
 
 
 
-	/* Bottom and left + with each other*/
+	/* //Bottom and left + with each other
 	void checkCollisions()
 	{
 		// check if on the bottom
@@ -145,16 +147,10 @@ public class GridMove : MonoBehaviour {
 			if( currentPos.y <= bottom.y )
 				stopTheBlock();
 		}
-	}
+	}*/
 	
 
-	void resetGrid() 
-	{
-		// Old array is cleaned
-		pino = new bool[4,10];
-		gridNotEmpty = false;
 
-	}
 
 	// Not working correctly
 	bool isRowFull() 
@@ -205,7 +201,7 @@ public class GridMove : MonoBehaviour {
 			yield return new WaitForSeconds (0.50F);
 		}
 	}
-	
+	/*
 	void moveAllBlocks()
 	{
 		StartCoroutine( Counter() );
@@ -216,8 +212,7 @@ public class GridMove : MonoBehaviour {
 		//a.gameObject.transform.position = new Vector3( pos.x, pos.y + 1, pos.z );
 
 	
-		//Debug.Log( allBlocks.ToString() );
-
+		Debug.Log( "WE ARE MOVING" );
 
 		foreach( GameObject blockParts in allBlocks ) 
 		{
@@ -226,32 +221,65 @@ public class GridMove : MonoBehaviour {
 
 			//colli.gameObject.transform.parent.gameObject;
 			Vector3 pos = blockParts.transform.position;
-			blockParts.gameObject.transform.position = new Vector3( pos.x, pos.y + 1, pos.z );
+			blockParts.gameObject.transform.position = new Vector3( pos.x, pos.y - 0.1f, pos.z );
 
-			for( int i=0; i< blockParts.transform.childCount; i++ )
-			{
-				point =	blockParts.transform.GetChild(i);
+			updatePino();
+
+
+			//for( int i=0; i< blockParts.transform.childCount; i++ )
+			//{
+			//	point =	blockParts.transform.GetChild(i);
 				//pino[ (int)point.x, (int)point.y ] = false;
-				pino[ 0,0] = false;
+
+				//pino[ (int)point.transform.position.x, (int)point.transform.position.y ] = false;
 
 				//point.y -= 1;
 				//allBlocks[i] = new GameObject 	// cheat!
 				//block.transform = block.transform.position.y - 1;
 				// update pino
-				//pino[(int)point.x, (int)point.y - 1 ] = true;
+				//pino[ (int)point.transform.position.x, (int)point.transform.position.y - 1] = true;
 				// check blocks collision from nearby
-			}
 		}
-		 
+	
+	}*/
 
+	void updatePino()
+	{
+		Vector3 point;
+
+		//for( int i=0; i<allBlocks.Capacity; i++ )
+		//foreach( GameObject blockParts in allBlocks ) 
+		//{
+			//int numChildren = allBlocks[i].transform.childCount;	
+			//for (int j = 0; j < numChildren; j++)
+			//{
+			//	point = blockParts[i].transform.GetChild(j).transform.position;
+		
+			//	Debug.Log (point.x + " and " + point.y );
+
+			//	pino[ (int)point.x, (int)point.y ] = false;
+			//	pino[ (int)point.x, (int)point.y - 1 ] = true;
+		//	}
+		//}
 	}
+
+
+	void resetGrid() 
+	{
+		// Old array is cleaned
+		pino = new bool[ boardsizeX, boardsizeY];
+		gridNotEmpty = false;
+		
+	}
+
+
 
 
 	// Update is called once per frame
 	void Update () 
 	{
-		if( this.gridNotEmpty )
-			moveAllBlocks();
+		//if( this.gridNotEmpty )
+		//	moveAllBlocks();
 
 		//printGrid();
 		//currentPos = transform.position();

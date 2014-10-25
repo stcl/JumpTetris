@@ -23,6 +23,13 @@ public class GridArray : MonoBehaviour {
 			dropAmount += destroyedDropSpeed*Time.deltaTime;
 			if(dropAmount < 0) {
 				dropAmount = 0F;
+				for(int i = 0; i < 6; i++) {
+					for(int j = 0; j < 12; j++) {
+						if (GridArray.blocks[i, j] != null && GridArray.blocks[i, j].GetComponent<Block>().activated == true) {
+							GridArray.blocks[i, j].GetComponent<Block>().activated = false;
+                        }
+                    }
+				}
 			}
 		}
 	}
