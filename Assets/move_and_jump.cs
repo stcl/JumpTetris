@@ -3,7 +3,8 @@ using System.Collections;
 
 public class move_and_jump : MonoBehaviour {
 
-	public Vector2  JumpVelocity =  new Vector2 (10, 10);
+	public float  JumpVelocityY = 5f;
+	public float  JumpVelocityX;
 	public int      JumpsLeft = 2;
 	public Vector2  StartVelocity = new Vector2 (10, 0);
 	public float    xx ;
@@ -34,7 +35,8 @@ public class move_and_jump : MonoBehaviour {
                 {
                     print ("jump");
                     rigidbody2D.gravityScale = 1.0f;
-                    rigidbody2D.velocity = JumpVelocity;
+					JumpVelocityX = rigidbody2D.velocity.x;
+					rigidbody2D.velocity = new Vector2(JumpVelocityX, JumpVelocityY);
                     JumpsLeft -= 1;
                 }
                 pressed = true;
