@@ -10,17 +10,34 @@ public class GridMove : MonoBehaviour {
 	public bool[,] pino;
 	public bool[,] usedBlocks;
 	public SpawnScript spawnScript;
+	public bool gridNotEmpty;
 
-	void onTriggerEnter2D( Collider2D coll ) 
+	public Vector3 bottomPosition;
+	public Vector3 currentPos;
+	public GameObject currentBlock;
+	
+	public GameObject bottomWall;
+	public GameObject rightWall;
+	
+
+	void OnTriggerEnter2D(Collider2D coll) 
 	{
 		Debug.Log( "Gridin sisalla");
 		trackedObject = coll.gameObject;
+
+		currentBlock = trackedObject;
+
+		Debug.Log( currentBlock.transform.position );
+
+		gridNotEmpty = true;
 		// Start the tracking
+		// Make the left wall concrete
+
 	}
 
 
 	// If bounces out (left) Back or dead?
-	void onTriggerExit2D( Collider2D coll ) 
+	void OnTriggerExit2D( Collider2D coll ) 
 	{
 		Debug.Log( "Bumbed out of grid");
 		trackedObject = coll.gameObject;
@@ -30,9 +47,9 @@ public class GridMove : MonoBehaviour {
 
 
 
-	/* Unit Tests */
+	/* Turn the block static and spawn new one*/
 
-	void blockIsStopped()	
+	void stopTheBlock()	
 	{
 
 		// Get the copy of the blocks position and rotation
@@ -51,16 +68,23 @@ public class GridMove : MonoBehaviour {
 		// Blocks can be on top of others
 
 	}
-	void canCollide() 
+
+	void checkNextBlock() 
 	{
 		// Blocks react to others
 		
 	}
-	void checkCollisions() 
-	{
 
-		// Grid or collider?
-		
+	void checkCollisions()
+	{
+		// check if on the bottom
+		this.currentPos = currentBlock.transform.position;
+		Vector3 bottom = this.bottomWall;
+
+		if( currentPos == bottom )
+			this.stopTheBlock();
+
+
 	}
 	
 
@@ -68,9 +92,8 @@ public class GridMove : MonoBehaviour {
 	{
 
 		// Old array is cleaned
-
 		pino = new bool[5,5];
-
+		gridNotEmpty = false;
 
 	}
 	
@@ -99,7 +122,11 @@ public class GridMove : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		checkCollisions();
+		//currentPos = transform.position();
+		if( gridNotEmpty )
+			checkCollisions();
+
+
 		//blockIsStopped();
 		
 	}
