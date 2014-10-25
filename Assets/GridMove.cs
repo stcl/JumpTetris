@@ -11,8 +11,6 @@ public class GridMove : MonoBehaviour {
 	public bool[,] usedBlocks;
 	public SpawnScript spawnScript;
 
-	// public preFab
-
 	void onTriggerEnter2D( Collider2D coll ) 
 	{
 		Debug.Log( "Gridin sisalla");
@@ -29,6 +27,7 @@ public class GridMove : MonoBehaviour {
 		// Get the copy of the blocks position and rotation
 
 		spawnScript.allowSpawn = true;
+	
 		if( this.isRowFull() )
 			Debug.Log("Saatiin rivi tayteen");
 		else
@@ -81,6 +80,7 @@ public class GridMove : MonoBehaviour {
 	// Use this for initialization
 	void Start() 
 	{
+		//GameObject.FindGameObjectsWithTag("Spawn"
 		resetGrid();
 		
 	}
