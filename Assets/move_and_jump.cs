@@ -13,8 +13,8 @@ public class move_and_jump : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-		rigidbody2D.velocity = StartVelocity;
-        rigidbody2D.gravityScale = 0.0f;
+		//rigidbody2D.velocity = StartVelocity;
+        //rigidbody2D.gravityScale = 0.0f;
 	}
 
 	// Update is called once per frame
