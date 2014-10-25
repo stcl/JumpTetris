@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-// Logic
+// Logical representation and handling
 
 public class GridMove : MonoBehaviour {
 
@@ -13,20 +13,23 @@ public class GridMove : MonoBehaviour {
 	public bool gridNotEmpty;
 
 	public Vector3 bottomPosition;
-	public Vector3 bottom = new Vector3(0f,-1f,0f); // Magic number
+	public Vector3 bottom = new Vector3(0f,0f,0f); // Magic number!
     public Vector3 currentPos;
 	public GameObject currentBlock;
+	public ArrayList allBlocks = new ArrayList();
 	
 	public GameObject bottomWall;
 	public GameObject rightWall;
 	
-
+	
+	/* The current blocks are gathered to arraylist */
 	void OnTriggerEnter2D(Collider2D coll) 
 	{
 		Debug.Log( "Gridin sisalla");
 		trackedObject = coll.gameObject;
 
 		currentBlock = trackedObject;
+		allBlocks.Add( currentBlock );
 
 		Debug.Log( currentBlock.transform.position );
 
@@ -42,33 +45,40 @@ public class GridMove : MonoBehaviour {
 	{
 		Debug.Log( "Bumbed out of grid");
 		trackedObject = coll.gameObject;
+
 		// Stop the tracking
+		allBlocks.Remove ( trackedObject );
+	}
+
+	// Do the bottom and left check here probably....
+	void OnCollisionEnter2D( Collider2D other )
+	{
+	
 	}
 
 
-
-
+	
 	/* Move block from parent to grid - spawn new one */
 
 	void stopTheBlock()	
 	{
 		// Get the copy of the blocks position and rotation
         // find the right block from scene/pool/parent and move
+
 		currentPos = currentBlock.transform.position;
 		int gridPosX = Mathf.RoundToInt ( currentPos.x );
 
-		Debug.Log ( gridPosX );
+		// change coordinates to grid
+		Debug.Log("STOPPING THIS: " + currentPos );
 
 		pino[ gridPosX, 0 ] = true;
 
+		printGrid();	//Debug
+
 		currentBlock = null;
 		//currentBlock = GameObject.FindGameObjectsWithTag<>();
-
-
-
-
-
-		//spawnScript.allowSpawn = true;
+			
+		spawnScript.allowSpawn = true;
 
 		if( this.isRowFull() )
 			Debug.Log("Saatiin rivi tayteen");
@@ -83,57 +93,62 @@ public class GridMove : MonoBehaviour {
 	void checkCollisions()
 	{
 		// check if on the bottom
-		this.currentPos = currentBlock.transform.position;
+		// Iterate through arraylist
+		foreach( GameObject block in allBlocks ) 
+		{
+			this.currentPos = block.transform.position;
 
+			Debug.Log("Should be 3 times");
 
-		if( currentPos.y <= bottom.y )
-			this.stopTheBlock();
+			currentBlock = block;
 
+			if( currentPos.y <= bottom.y )
+				stopTheBlock();
+		}
 	}
 	
 
 	void resetGrid() 
 	{
-
 		// Old array is cleaned
-		pino = new bool[5,5];
+		pino = new bool[3,3];
 		gridNotEmpty = false;
 
 	}
-	
+
+	// Not working correctly
 	bool isRowFull() 
 	{
-		// check if there is a clean row		
+		// check if there is a clean row by going different rows		
 
-		for (int y = pino.GetLength(0) - 1; y >= 0; y--)
-			for (int x = 0; x < pino.GetLength(1) - 1; x++)
-				if( pino[y,x] == false )
+		for( int y = pino.GetLength(0) - 1; y >= 0; y--)
+			for( int x = 0; x < pino.GetLength(1) - 1; x++) {
+				if( pino[x,y] == false )
 				   return false;
-		
+			}
 		return true;
 
 	}
 
-	bool moveBlockToGrid() 
+	// Debug
+	void printGrid() 
 	{
-
-		return true;
+		for( int y = 0; y <= pino.GetLength(0) - 1; y++)
+			for( int x = 0; x < pino.GetLength(1) - 1; x++)
+				Debug.Log ( "GRID: " + pino[ y,x ] );
 	}
+
+
+
+	bool moveBlockToGrid() { return true; }
 	
-	void canStackBlocks() 
-	{
-		// Blocks can be on top of others
-		
-	}
+	void canStackBlocks() { }
 	
 	void checkNextBlock() 
 	{
-        // Blocks react to others
-        
+        // Blocks react to others       
 	}
-
-
-	
+		
 	void spawnToLowerRight() {}    
     
 
@@ -148,6 +163,7 @@ public class GridMove : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		printGrid();
 		//currentPos = transform.position();
 		if( gridNotEmpty && currentBlock != null)
 			checkCollisions();
