@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 
 // Logical representation and handling
@@ -13,32 +14,36 @@ public class GridMove : MonoBehaviour {
 	public bool gridNotEmpty;
 
 	public Vector3 bottomPosition;
-	public Vector3 bottom = new Vector3(0f,1f,0f); // Magic number!
+	public Vector3 bottom = new Vector3(0f,0f,0f); // Magic number!
     public Vector3 currentPos;
 	public GameObject currentBlock;
-	public ArrayList allBlocks = new ArrayList();
+
+	public List<List<Vector2>> allBlocks = new List<List<Vector2>>();
+	//public ArrayList allBlocks = new ArrayList();
+	public ArrayList nonMovingBlocks = new ArrayList();
 	
 	public GameObject bottomWall;
 	public GameObject rightWall;
 	
 	
 	/* The current blocks are gathered to arraylist */
-	void OnTriggerEnter2D(Collider2D coll) 
+	void OnCollisionEnter2D(Collision2D coll) 
 	{
+	
 		Debug.Log( "Gridin sisalla");
-		trackedObject = coll.gameObject.transform.parent.gameObject;
 
+		Collider2D colli = coll.collider;
+		trackedObject = colli.gameObject.transform.parent.gameObject;
 		currentBlock = trackedObject;
-		allBlocks.Add( currentBlock );
+		//allBlocks.Add( currentBlock );
 
 		//Debug.Log( currentBlock.transform.position );
 
 		gridNotEmpty = true;
+		colli = null;
 
 		moveToGrid( currentBlock );
 	
-
-
 		// Start the tracking
 		// Make the left wall concrete
 
@@ -48,6 +53,8 @@ public class GridMove : MonoBehaviour {
 	void moveToGrid( GameObject block ) 
 	{
 		Transform indi;
+
+		ArrayList blockPart = new ArrayList();
 
 		Debug.Log( block.transform.childCount );
 
@@ -59,15 +66,17 @@ public class GridMove : MonoBehaviour {
 			int gridPosX = Mathf.RoundToInt( indi.transform.position.x );
 			int gridPosY = Mathf.RoundToInt( indi.transform.position.y );
 
-			Debug.Log( "Grid X: " + gridPosX );
-			Debug.Log( "Grid Y: " + gridPosY );
+			Debug.Log( "Grid X: " + gridPosX + " Y: " + gridPosY);
 
 			pino[ gridPosX, gridPosY ] = true;
 
+			blockPart.Add( new Vector2( gridPosX, gridPosY ) );
+
 			printGrid();
-
-
+		
 		}
+
+		allBlocks.Add( blockPart ); 
 
 	}
 
@@ -83,12 +92,6 @@ public class GridMove : MonoBehaviour {
 
 		// Stop the tracking
 		allBlocks.Remove ( trackedObject );
-	}
-
-	// Do the bottom and left check here probably....
-	void OnCollisionEnter2D( Collision2D other )
-	{
-	
 	}
 
 
@@ -148,7 +151,7 @@ public class GridMove : MonoBehaviour {
 	void resetGrid() 
 	{
 		// Old array is cleaned
-		pino = new bool[10,10];
+		pino = new bool[4,10];
 		gridNotEmpty = false;
 
 	}
@@ -175,8 +178,6 @@ public class GridMove : MonoBehaviour {
 				Debug.Log ( "GRID: " + pino[ y,x ] );
 	}
 
-
-
 	bool moveBlockToGrid() { return true; }
 	
 	void canStackBlocks() { }
@@ -197,14 +198,51 @@ public class GridMove : MonoBehaviour {
 		resetGrid();
 		
 	}
+
+	IEnumerator Counter(){
+		while (true) {
+			Debug.Log("ODOTA");
+			yield return new WaitForSeconds (0.50F);
+		}
+
+	}
 	
+	void moveAllBlocks() 
+	{
+		StartCoroutine( Counter() );
+	
+		List<List<string>>();
+
+
+		foreach( ArrayList blockParts in allBlocks ) 
+		{
+			for( int i=0; i< blockParts.Capacity; i++ )
+			//foreach( Vector2 point in blockParts )
+			{
+				Vector2 point = (Vector2)blockParts[i];
+				pino[ (int)point.x, (int)point.y ] = false;
+
+				//point.y -= 1;
+				allBlocks[0][0] = new Vector2( point.x, point.y - 1 );	// cheat!
+				//block.transform = block.transform.position.y - 1;
+				// update pino
+				pino[ (int)point.x, (int)point.y ] = true;
+				// check blocks collision from nearby
+			}
+		}
+	}
+
+
 	// Update is called once per frame
 	void Update () 
 	{
-		printGrid();
+		if( this.gridNotEmpty )
+			moveAllBlocks();
+
+		//printGrid();
 		//currentPos = transform.position();
-		if( gridNotEmpty && currentBlock != null)
-			checkCollisions();
+		//if( gridNotEmpty && currentBlock != null)
+			//checkCollisions();
 
 
 		//blockIsStopped();
