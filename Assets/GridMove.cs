@@ -13,7 +13,7 @@ public class GridMove : MonoBehaviour {
 	public bool gridNotEmpty;
 
 	public Vector3 bottomPosition;
-	public Vector3 bottom = new Vector3(0f,0f,0f); // Magic number!
+	public Vector3 bottom = new Vector3(0f,1f,0f); // Magic number!
     public Vector3 currentPos;
 	public GameObject currentBlock;
 	public ArrayList allBlocks = new ArrayList();
@@ -26,18 +26,53 @@ public class GridMove : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D coll) 
 	{
 		Debug.Log( "Gridin sisalla");
-		trackedObject = coll.gameObject;
+		trackedObject = coll.gameObject.transform.parent.gameObject;
 
 		currentBlock = trackedObject;
 		allBlocks.Add( currentBlock );
 
-		Debug.Log( currentBlock.transform.position );
+		//Debug.Log( currentBlock.transform.position );
 
 		gridNotEmpty = true;
+
+		moveToGrid( currentBlock );
+	
+
+
 		// Start the tracking
 		// Make the left wall concrete
 
 	}
+
+
+	void moveToGrid( GameObject block ) 
+	{
+		Transform indi;
+
+		Debug.Log( block.transform.childCount );
+
+		for( int i=0; i < block.transform.childCount; i++ )
+		{
+			//Debug.Log( "Changing: " + i );
+
+			indi = block.transform.GetChild( i );
+			int gridPosX = Mathf.RoundToInt( indi.transform.position.x );
+			int gridPosY = Mathf.RoundToInt( indi.transform.position.y );
+
+			Debug.Log( "Grid X: " + gridPosX );
+			Debug.Log( "Grid Y: " + gridPosY );
+
+			pino[ gridPosX, gridPosY ] = true;
+
+			printGrid();
+
+
+		}
+
+	}
+
+
+
 
 
 	// If bounces out (left) Back or dead?
@@ -98,9 +133,11 @@ public class GridMove : MonoBehaviour {
 		{
 			this.currentPos = block.transform.position;
 
-			Debug.Log("Should be 3 times");
+			Debug.Log("Should come 3 times");
 
-			currentBlock = block;
+			currentBlock = block;	// probably useless...
+
+			//Debug.Log( currentPos );
 
 			if( currentPos.y <= bottom.y )
 				stopTheBlock();
@@ -111,7 +148,7 @@ public class GridMove : MonoBehaviour {
 	void resetGrid() 
 	{
 		// Old array is cleaned
-		pino = new bool[3,3];
+		pino = new bool[10,10];
 		gridNotEmpty = false;
 
 	}
@@ -150,7 +187,8 @@ public class GridMove : MonoBehaviour {
 	}
 		
 	void spawnToLowerRight() {}    
-    
+
+	//void 
 
 	// Use this for initialization
 	void Start() 
