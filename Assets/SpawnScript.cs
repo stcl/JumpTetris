@@ -8,18 +8,13 @@ public class SpawnScript : MonoBehaviour {
 	public GameObject block4;
 	public GameObject block5;
 	public GameObject block6;
-	public Texture block1sprite;
-	public Texture block2sprite;
-	public Texture block3sprite;
-	public Texture block4sprite;
-	public Texture block5sprite;
-	public Texture block6sprite;
+
 
 	public GameObject spawnArea;
 	public float spawnVelocityX;
 	public bool allowSpawn;
 	private Vector2 spawnVelocity;
-	private int nextBlock;
+	public int nextBlock;
 	// Use this for initialization
 	void Start () {
 		allowSpawn = true;
@@ -28,26 +23,7 @@ public class SpawnScript : MonoBehaviour {
 		nextBlock = Random.Range(1,7);
 	}
 	
-	void OnGUI () {
-		if (nextBlock == 1) {
-			GUI.DrawTexture(new Rect(5f, 5f, 64f, 32f), block1sprite, ScaleMode.ScaleToFit);
-		}
-		else if (nextBlock == 2) {
-			GUI.DrawTexture(new Rect(5f, 5f, 64f, 32f), block2sprite, ScaleMode.ScaleToFit);
-		}
-		else if (nextBlock == 3) {
-			GUI.DrawTexture(new Rect(5f, 5f, 64f, 32f), block3sprite, ScaleMode.ScaleToFit);
-		}
-		else if (nextBlock == 4) {
-			GUI.DrawTexture(new Rect(5f, 5f, 64f, 32f), block4sprite, ScaleMode.ScaleToFit);
-		}
-		else if (nextBlock == 5) {
-			GUI.DrawTexture(new Rect(5f, 5f, 64f, 32f), block5sprite, ScaleMode.ScaleToFit);
-		}
-		else if (nextBlock == 6) {
-			GUI.DrawTexture(new Rect(5f, 5f, 64f, 32f), block6sprite, ScaleMode.ScaleToFit);
-		}
-	}
+
 
 	// Update is called once per frame
 	void Update () {
