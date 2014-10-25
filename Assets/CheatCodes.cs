@@ -7,9 +7,12 @@ public class CheatCodes : MonoBehaviour {
 
     public string CheatCode = "iddqd";
 
+    private GameObject Submarine = null;
+
     // Use this for initialization
-    void Start () {
-        
+    void Start ()
+    {
+        Submarine = GameObject.Find ("Submarine");
     }
     
     // Update is called once per frame
@@ -23,11 +26,16 @@ public class CheatCodes : MonoBehaviour {
                     codecount += 1;
             }
             else
+            {
                 CheatsActive = true;
-
+                if(Submarine != null)
+                    Submarine.animation.Play() ; //enabled = true;
+           
+            }
         }
     }
 
 }
 
 
+  
