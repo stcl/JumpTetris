@@ -28,7 +28,7 @@ public class rotating : MonoBehaviour {
             {
                 if(Input.GetKey (KeyCode.LeftArrow))
                 {
-                    print ("Left");
+                    //print ("Left");
                     pressed = true;
                     Rotation -= 90;
                     if(Rotation < 0)    
@@ -41,7 +41,7 @@ public class rotating : MonoBehaviour {
 
                 if(Input.GetKey (KeyCode.RightArrow))
                 {
-                    print ("Right");
+                    //print ("Right");
                     pressed = true;
                     Rotation += 90;
 
