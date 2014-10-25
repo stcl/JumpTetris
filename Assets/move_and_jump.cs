@@ -3,7 +3,7 @@ using System.Collections;
 
 public class move_and_jump : MonoBehaviour {
 
-	public float  JumpVelocityY = 5f;
+	public float  JumpVelocityY = 10f;
 	public float  JumpVelocityX;
 	public int      JumpsLeft = 2;
 	public Vector2  StartVelocity = new Vector2 (10, 0);
