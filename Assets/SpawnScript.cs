@@ -6,6 +6,8 @@ public class SpawnScript : MonoBehaviour {
 	public GameObject block2;
 	public GameObject block3;
 	public GameObject block4;
+	public GameObject block5;
+	public GameObject block6;
 	public GameObject spawnArea;
 	public float spawnVelocityX;
 	public bool allowSpawn;
@@ -26,7 +28,7 @@ public class SpawnScript : MonoBehaviour {
 				}
 
 		if (allowSpawn) {
-			selectedBlock = Random.Range(1,5);
+			selectedBlock = Random.Range(1,7);
 			if (selectedBlock == 1) {
 				Spawn(block1);
 			}
@@ -38,6 +40,12 @@ public class SpawnScript : MonoBehaviour {
 			}
 			else if (selectedBlock == 4) {
 				Spawn(block4);
+			}
+			else if (selectedBlock == 5) {
+				Spawn(block5);
+			}
+			else if (selectedBlock == 6) {
+				Spawn(block6);
 			}
 				}
 	}
