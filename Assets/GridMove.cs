@@ -51,7 +51,7 @@ public class GridMove : MonoBehaviour {
 	}
 
 	// Do the bottom and left check here probably....
-	void OnCollisionEnter2D( Collider2D other )
+	void OnCollisionEnter2D( Collision2D other )
 	{
 	
 	}
