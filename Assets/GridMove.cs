@@ -17,9 +17,9 @@ public class GridMove : MonoBehaviour {
 	public Vector3 bottom = new Vector3(0f,0f,0f); // Magic number!
     public Vector3 currentPos;
 	public GameObject currentBlock;
-
-	public List<List<Vector2>> allBlocks = new List<List<Vector2>>();
-	//public ArrayList allBlocks = new ArrayList();
+	
+	//public List<List<Vector2>> allBlocks = new List<List<Vector2>>();
+	public ArrayList allBlocks = new ArrayList();
 	public ArrayList nonMovingBlocks = new ArrayList();
 	
 	public GameObject bottomWall;
@@ -70,13 +70,13 @@ public class GridMove : MonoBehaviour {
 
 			pino[ gridPosX, gridPosY ] = true;
 
-			blockPart.Add( new Vector2( gridPosX, gridPosY ) );
+			//blockPart.Add( new Vector2( gridPosX, gridPosY ) );
 
 			printGrid();
 		
 		}
 
-		allBlocks.Add( blockPart ); 
+		allBlocks.Add( block );
 
 	}
 
@@ -91,7 +91,7 @@ public class GridMove : MonoBehaviour {
 		trackedObject = coll.gameObject;
 
 		// Stop the tracking
-		allBlocks.Remove ( trackedObject );
+		//allBlocks.Remove ( trackedObject );
 	}
 
 
@@ -204,32 +204,46 @@ public class GridMove : MonoBehaviour {
 			Debug.Log("ODOTA");
 			yield return new WaitForSeconds (0.50F);
 		}
-
 	}
 	
-	void moveAllBlocks() 
+	void moveAllBlocks()
 	{
 		StartCoroutine( Counter() );
+
+		Transform point;
+
+		//Vector3 pos = a.transform.position;
+		//a.gameObject.transform.position = new Vector3( pos.x, pos.y + 1, pos.z );
+
 	
-		List<List<string>>();
+		//Debug.Log( allBlocks.ToString() );
 
 
-		foreach( ArrayList blockParts in allBlocks ) 
+		foreach( GameObject blockParts in allBlocks ) 
 		{
-			for( int i=0; i< blockParts.Capacity; i++ )
-			//foreach( Vector2 point in blockParts )
+
+			Debug.Log( "AAAA: " + blockParts.ToString() );
+
+			//colli.gameObject.transform.parent.gameObject;
+			Vector3 pos = blockParts.transform.position;
+			blockParts.gameObject.transform.position = new Vector3( pos.x, pos.y + 1, pos.z );
+
+			for( int i=0; i< blockParts.transform.childCount; i++ )
 			{
-				Vector2 point = (Vector2)blockParts[i];
-				pino[ (int)point.x, (int)point.y ] = false;
+				point =	blockParts.transform.GetChild(i);
+				//pino[ (int)point.x, (int)point.y ] = false;
+				pino[ 0,0] = false;
 
 				//point.y -= 1;
-				allBlocks[0][0] = new Vector2( point.x, point.y - 1 );	// cheat!
+				//allBlocks[i] = new GameObject 	// cheat!
 				//block.transform = block.transform.position.y - 1;
 				// update pino
-				pino[ (int)point.x, (int)point.y ] = true;
+				//pino[(int)point.x, (int)point.y - 1 ] = true;
 				// check blocks collision from nearby
 			}
 		}
+		 
+
 	}
 
 
