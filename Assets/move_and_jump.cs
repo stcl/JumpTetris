@@ -7,13 +7,27 @@ public class move_and_jump : MonoBehaviour {
 	public float  JumpVelocityX;
 	public int      JumpsLeft = 2;
 	public Vector2  StartVelocity = new Vector2 (10, 0);
-	public float    xx ;
-    
+	public float    CheatDownSpeed = 20f ;
+
+    public GameObject GameOBJ_Scripts = null;
+
     private bool    pressed = false;
+    private CheatCodes cheats = null;
 
 	// Use this for initialization
 	void Start ()
 	{
+
+        if (GameOBJ_Scripts == null)
+        {
+            GameOBJ_Scripts = GameObject.Find("Scripts");
+        }
+
+        if (GameOBJ_Scripts != null)
+        {
+            cheats = GameOBJ_Scripts.GetComponent<CheatCodes>();
+        }
+        print (cheats);
 		//rigidbody2D.velocity = StartVelocity;
         //rigidbody2D.gravityScale = 0.0f;
 	}
@@ -42,6 +56,15 @@ public class move_and_jump : MonoBehaviour {
                 pressed = true;
                 
             }
+
+            if(Input.GetKey(KeyCode.DownArrow))
+                if(cheats != null)
+                    if(cheats.CheatsActive)
+                    {
+                        print ("cheats actve");
+                        rigidbody2D.velocity = new Vector2(0, -CheatDownSpeed); //rigidbody2D.velocity.y);
+                    }
+
         }
 	}
 }
