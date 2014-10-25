@@ -52,14 +52,18 @@ public class IngameUIScript : MonoBehaviour {
 
 	public void GameOver() {
 		gameOver = true;
-		if (PlayerPrefs.HasKey ("HighScore") == false || PlayerPrefs.GetInt("HighScore") <= score ){
-			PlayerPrefs.SetInt("HighScore", score);
-			newRecord = true;
-				}
+		saveScore (score);
 		}
 
 	public void addScore(int amount) {
 		score += amount;
+	}
+
+	public void saveScore(int amount) {
+		if (PlayerPrefs.HasKey ("HighScore") == false || PlayerPrefs.GetInt("HighScore") <= amount ){
+			PlayerPrefs.SetInt("HighScore", amount);
+			newRecord = true;
+		}
 	}
 
 }
