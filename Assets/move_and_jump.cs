@@ -44,7 +44,7 @@ public class move_and_jump : MonoBehaviour {
         if (Input.GetKeyDown (KeyCode.Space) || Input.GetMouseButton (0))
         {
         
-            if (JumpsLeft > 0)
+            if (JumpsLeft > 0 && GoingDown == false)
             {
                 print ("jump");
                 rigidbody2D.gravityScale = 1.0f;
