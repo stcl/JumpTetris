@@ -35,15 +35,19 @@ public class Collides : MonoBehaviour {
 		transform.DetachChildren();
         Destroy(gameObject);
 		for(int i = 0; i < 6; i++) {
-				if(collidersBottomColumn[i] - topBlockColumn[i] < dropAmount) {
+			if(collidersBottomColumn[i] - topBlockColumn[i] < dropAmount) {
 				dropAmount = collidersBottomColumn[i] - topBlockColumn[i];
+				if( dropAmount < 0 )
+					dropAmount = 0;
 			}
 		}
 		for(int i = 0; i < 6; i++) {
 			for(int j = 0; j < 12; j++) {
-				if (GridArray.blocks[i, j].GetComponent<Block>().activated == true) {
-					GridArray.blocks[i, j-dropAmount] = GridArray.blocks[i, j];
-					Destroy(GridArray.blocks[i, j]);
+				if( this.dropAmount != 0 && GridArray.blocks[i, j] != null && GridArray.blocks[i,j].GetComponent<Block>().activated == true) {
+					Debug.Log ("J:" + j + "DROP: " + dropAmount);
+
+					GridArray.blocks[i, j-dropAmount+1] = GridArray.blocks[i, j];
+					//Destroy(GridArray.blocks[i, j]);
 					GridArray.blocks[i, j] = null;
 				}
 			}
