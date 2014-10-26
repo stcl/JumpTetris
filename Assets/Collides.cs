@@ -39,6 +39,15 @@ public class Collides : MonoBehaviour {
 				dropAmount = collidersBottomColumn[i] - topBlockColumn[i];
 			}
 		}
+		for(int i = 0; i < 6; i++) {
+			for(int j = 0; j < 12; j++) {
+				if (GridArray.blocks[i, j].GetComponent<Block>().activated == true) {
+					GridArray.blocks[i, j-dropAmount] = GridArray.blocks[i, j];
+					Destroy(GridArray.blocks[i, j]);
+					GridArray.blocks[i, j] = null;
+				}
+			}
+		}
 		Debug.Log(dropAmount);
 		GridArray.dropAmount = dropAmount;
 		GridArray.yVelocity = yVelocity;
