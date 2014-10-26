@@ -60,6 +60,7 @@ public class move_and_jump : MonoBehaviour {
                 //print ("cheats actve");
             rigidbody2D.velocity = new Vector2 (0, -CheatDownSpeed); //rigidbody2D.velocity.y);
             GoingDown = true;
+			rigidbody2D.gravityScale = 1.0f;
         //}
         }
     }
