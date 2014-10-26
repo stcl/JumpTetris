@@ -65,6 +65,14 @@ public class Collides : MonoBehaviour {
 		GridArray.dropAmount = dropAmount;
 		GridArray.yVelocity = yVelocity;
 	}
+
+	void Update() {
+		if (transform.position.y < - 2f) {
+			spawnScript.spawnBlock();
+			inGameUIScript.updateNextBlock();
+			Destroy (gameObject);
+				}
+	}
 	
 	void CheckTopBlockColumn() {
 		topBlockColumn = new int[] {0, 0, 0, 0, 0, 0};
