@@ -25,6 +25,8 @@ public class IngameUIScript : MonoBehaviour {
 	public Texture block5sprite;
 	public Texture block6sprite;
 
+	public Texture gameOverScreen;
+
 	private int nextBlock;
 
 	// Use this for initialization
@@ -78,6 +80,7 @@ public class IngameUIScript : MonoBehaviour {
 		hiscoreDimensions = mediumFontStyle.CalcSize (new GUIContent("Highscore: "+ PlayerPrefs.GetInt("HighScore").ToString()));
 		GUI.Label (new Rect (Screen.width - hiscoreDimensions.x *1.1f, hiscoreDimensions.y * 0.2f, hiscoreDimensions.x, hiscoreDimensions.y), "Highscore: "+ PlayerPrefs.GetInt("HighScore").ToString(), mediumFontStyle);
 		if (gameOver) {
+			GUI.DrawTexture(new Rect(0f, 0f, Screen.width, Screen.height), gameOverScreen, ScaleMode.StretchToFill);
 			if (newRecord == false) {
 			GUI.Label (new Rect (Screen.width / 2f - gameOverDimensions.x /2f, scoreDimensions.y * 1.5f, gameOverDimensions.x, gameOverDimensions.y), "Game Over!", bigFontStyle);
 			}
