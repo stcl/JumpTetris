@@ -2,8 +2,9 @@
 using System.Collections;
 
 public class IngameUIScript : MonoBehaviour {
-	public int score;
-	public SpawnScript spawnScript;
+	private int currentScore;
+	private SpawnScript spawnScript;
+	private ScoreScript scoreScript;
 	private Vector2 scoreDimensions;
 	private Vector2 hiscoreDimensions;
 	private Vector2 gameOverDimensions;
@@ -14,8 +15,8 @@ public class IngameUIScript : MonoBehaviour {
 	public float screenWidth;
 	private float buttonWidth;
 	private float buttonHeight;
-	public bool gameOver;
-	public bool newRecord;
+	private bool gameOver;
+	private bool newRecord;
 
 	public Texture block1sprite;
 	public Texture block2sprite;
@@ -28,7 +29,9 @@ public class IngameUIScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		score = 0;
+		spawnScript = GameObject.Find("Scripts").GetComponent<SpawnScript>();
+		scoreScript = GameObject.Find("Scripts").GetComponent<ScoreScript>();
+		currentScore = scoreScript.score;
 		screenHeight = Screen.height;
 		screenWidth = Screen.width;
 		mediumFontStyle.fontSize = Screen.width / 23;
@@ -68,7 +71,9 @@ public class IngameUIScript : MonoBehaviour {
 			GUI.DrawTexture(new Rect(5f, 5f, 64f, 32f), block6sprite, ScaleMode.ScaleToFit);
 		}
 
-		scoreDimensions = mediumFontStyle.CalcSize (new GUIContent(score.ToString ()));
+
+		currentScore = scoreScript.score;
+		scoreDimensions = mediumFontStyle.CalcSize (new GUIContent(currentScore.ToString ()));
 		GUI.Label (new Rect (Screen.width / 2f - scoreDimensions.x /2f, scoreDimensions.y * 0.2f, scoreDimensions.x, scoreDimensions.y), score.ToString(), mediumFontStyle);
 		hiscoreDimensions = mediumFontStyle.CalcSize (new GUIContent("Highscore: "+ PlayerPrefs.GetInt("HighScore").ToString()));
 		GUI.Label (new Rect (Screen.width - hiscoreDimensions.x *1.1f, hiscoreDimensions.y * 0.2f, hiscoreDimensions.x, hiscoreDimensions.y), "Highscore: "+ PlayerPrefs.GetInt("HighScore").ToString(), mediumFontStyle);
@@ -87,19 +92,12 @@ public class IngameUIScript : MonoBehaviour {
 
 	public void GameOver() {
 		gameOver = true;
-		saveScore (score);
+		newRecord = scoreScript.saveScore ();
 		}
 
-	public void addScore(int amount) {
-		score += amount;
-	}
 
-	public void saveScore(int amount) {
-		if (PlayerPrefs.HasKey ("HighScore") == false || PlayerPrefs.GetInt("HighScore") <= amount ){
-			PlayerPrefs.SetInt("HighScore", amount);
-			newRecord = true;
-		}
-	}
+
+
 
 	public void updateNextBlock() {
 		nextBlock = spawnScript.nextBlock;
