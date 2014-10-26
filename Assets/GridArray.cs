@@ -12,26 +12,31 @@ public class GridArray : MonoBehaviour {
 	}
 
 	void DropActiveBlocks() {
-		if(dropAmount > 0) {
+		if (dropAmount > 0)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 12; j++)
+                {
+                    if (GridArray.blocks [i, j] != null && GridArray.blocks [i, j].GetComponent<Block> ().activated == true)
+                    {
+                        GridArray.blocks [i, j].transform.position = new Vector3 (GridArray.blocks [i, j].transform.position.x, GridArray.blocks [i, j].transform.position.y + destroyedDropSpeed * Time.deltaTime, 0); 
+                    }
+                }
+            }
+        }
+		dropAmount += destroyedDropSpeed*Time.deltaTime;
+		if(dropAmount <= 0) {
+			dropAmount = 0F;
 			for(int i = 0; i < 6; i++) {
 				for(int j = 0; j < 12; j++) {
 					if (GridArray.blocks[i, j] != null && GridArray.blocks[i, j].GetComponent<Block>().activated == true) {
-						GridArray.blocks[i, j].transform.position = new Vector3(GridArray.blocks[i, j].transform.position.x, GridArray.blocks[i, j].transform.position.y + destroyedDropSpeed*Time.deltaTime, 0); 
-					}
-				}
-			}
-			dropAmount += destroyedDropSpeed*Time.deltaTime;
-			if(dropAmount <= 0) {
-				dropAmount = 0F;
-				for(int i = 0; i < 6; i++) {
-					for(int j = 0; j < 12; j++) {
-						if (GridArray.blocks[i, j] != null && GridArray.blocks[i, j].GetComponent<Block>().activated == true) {
-							GridArray.blocks[i, j].GetComponent<Block>().activated = false;
-                        }
+						GridArray.blocks[i, j].GetComponent<Block>().activated = false;
                     }
-				}
+                }
 			}
 		}
+	
 	}
 	
 	void DropLinesOverRowY(int amount, int row) {
