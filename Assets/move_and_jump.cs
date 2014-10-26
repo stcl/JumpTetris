@@ -12,6 +12,7 @@ public class move_and_jump : MonoBehaviour {
     public GameObject GameOBJ_Scripts = null;
 
     private bool    pressed = false;
+    public bool    GoingDown = false;
     private CheatCodes cheats = null;
 
 	// Use this for initialization
@@ -30,41 +31,36 @@ public class move_and_jump : MonoBehaviour {
         print (cheats);
 		//rigidbody2D.velocity = StartVelocity;
         //rigidbody2D.gravityScale = 0.0f;
+        GoingDown = false;
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
-        if (pressed)
+        if (Input.GetKeyDown (KeyCode.Space) || Input.GetMouseButton (0))
         {
-            if(!(Input.GetKey (KeyCode.Space) || Input.GetMouseButton(0)))
-                pressed = false;
-        }
-        else
-        {
-            if (Input.GetKey (KeyCode.Space) || Input.GetMouseButton(0))
+        
+            if (JumpsLeft > 0)
             {
-                
-                if (JumpsLeft > 0)
-                {
-                    print ("jump");
-                    rigidbody2D.gravityScale = 1.0f;
-					JumpVelocityX = rigidbody2D.velocity.x;
-					rigidbody2D.velocity = new Vector2(JumpVelocityX, JumpVelocityY);
-                    JumpsLeft -= 1;
-                }
-                pressed = true;
-                
+                print ("jump");
+                rigidbody2D.gravityScale = 1.0f;
+                JumpVelocityX = rigidbody2D.velocity.x;
+                rigidbody2D.velocity = new Vector2 (JumpVelocityX, JumpVelocityY);
+                JumpsLeft -= 1;
             }
-
-            if(Input.GetKey(KeyCode.DownArrow))
-                //if(cheats != null)
-                    //if(cheats.CheatsActive)
-                    //{
-                        //print ("cheats actve");
-            	rigidbody2D.velocity = new Vector2(0, -CheatDownSpeed); //rigidbody2D.velocity.y);
-                    //}
-
+            pressed = true;
+        
         }
-	}
+
+        if (Input.GetKeyDown (KeyCode.DownArrow))
+        {
+        //if(cheats != null)
+            //if(cheats.CheatsActive)
+            //{
+                //print ("cheats actve");
+            rigidbody2D.velocity = new Vector2 (0, -CheatDownSpeed); //rigidbody2D.velocity.y);
+            GoingDown = true;
+        //}
+        }
+    }
 }
