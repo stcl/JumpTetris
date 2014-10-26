@@ -15,11 +15,13 @@ public class ScoreScript : MonoBehaviour {
 	
 	}
 
-	public int saveScore() {
-		if (PlayerPrefs.HasKey ("HighScore") == false || PlayerPrefs.GetInt("HighScore") <= score ){
-			PlayerPrefs.SetInt("HighScore", score);
-			return true;
-		}
+	public bool saveScore() {
+		if (PlayerPrefs.HasKey ("HighScore") == false || PlayerPrefs.GetInt ("HighScore") <= score) {
+						PlayerPrefs.SetInt ("HighScore", score);
+						return true;
+				} else {
+			return false;
+				}
 	}
 
 	public void addScore(int amount) {
