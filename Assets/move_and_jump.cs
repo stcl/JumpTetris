@@ -37,6 +37,10 @@ public class move_and_jump : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
+		if (gameObject.transform.position.x > -8.87f) {
+			rigidbody2D.gravityScale = 1.0f;
+				}
+
         if (Input.GetKeyDown (KeyCode.Space) || Input.GetMouseButton (0))
         {
         
