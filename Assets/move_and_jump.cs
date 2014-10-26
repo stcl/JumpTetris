@@ -58,12 +58,12 @@ public class move_and_jump : MonoBehaviour {
             }
 
             if(Input.GetKey(KeyCode.DownArrow))
-                if(cheats != null)
-                    if(cheats.CheatsActive)
-                    {
-                        print ("cheats actve");
-                        rigidbody2D.velocity = new Vector2(0, -CheatDownSpeed); //rigidbody2D.velocity.y);
-                    }
+                //if(cheats != null)
+                    //if(cheats.CheatsActive)
+                    //{
+                        //print ("cheats actve");
+            	rigidbody2D.velocity = new Vector2(0, -CheatDownSpeed); //rigidbody2D.velocity.y);
+                    //}
 
         }
 	}
