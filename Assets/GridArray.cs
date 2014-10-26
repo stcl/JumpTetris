@@ -21,7 +21,7 @@ public class GridArray : MonoBehaviour {
 				}
 			}
 			dropAmount += destroyedDropSpeed*Time.deltaTime;
-			if(dropAmount < 0) {
+			if(dropAmount <= 0) {
 				dropAmount = 0F;
 				for(int i = 0; i < 6; i++) {
 					for(int j = 0; j < 12; j++) {
