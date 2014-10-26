@@ -29,6 +29,14 @@ public class Collides : MonoBehaviour {
 				child.position = new Vector3(child.position.x + 0.5F, child.position.y + 0.5F, 0);
 				child.GetComponent<Block>().activated = true;
 			}
+            else
+            {
+                child.GetComponent<Block>().drop = true;
+                if(child.position.y >= 12)
+                {
+                    // Game over
+                }
+            }
 		}
 		spawnScript.spawnBlock();
 		inGameUIScript.updateNextBlock();
