@@ -39,14 +39,13 @@ public class Collides : MonoBehaviour {
 
         for (int i = 0; i < 6; i++)
         {
-
             for (int a = collidersBottomColumn[i]; a > 0; a--)
             {
                 if (GridArray.blocks [i, a] != null)
                 {
                     if (a < dropAmount)
                         dropAmount = a;
-                    a = 0;
+                    break;
                 }
             }
 
